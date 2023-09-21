@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNIC Sammelanam</title>
+    <link rel="icon" type="image/x-icon" href="img3.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam&family=Poppins&display=swap" rel="stylesheet">
+    <style type="text/css">
+        body {
+          font-family: 'Poppins', sans-serif;
+          margin: 0;
+          padding-left: 7%;
+          text-align: center;
+          padding-right: 7%;
+          overflow: hidden;
+        }
+        
+        h5 {
+          text-align: center;
+          margin-top: 50px;
+          padding-left: 4%;
+          padding-right: 4%;
+          margin-bottom: 0px;
+        }
+        
+        form {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 10px;
+        }
+        
+        label {
+          font-size: 18px;
+          margin-bottom: 20px;
+        }
+        
+        .file-picker {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.file-picker label {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #4caf50;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-picker label:hover {
+  background-color: #388e3c;
+}
+
+.file-picker input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-picker i {
+  margin-right: 8px;
+}
+
+        
+        button[type="submit"] {
+          background-color: #4CAF50;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+        }
+        
+        button[type="submit"]:hover {
+          background-color: #3e8e41;
+        }
+        #download{
+            background-color: #4CAF50;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+          visibility: hidden;
+        }
+        #download:hover{
+            background-color: #3e8e41;
+        }
+        
+        #preview {
+          margin-top: 50px;
+          text-align: center;
+        }
+        
+        #preview img {
+          border: 10px solid white;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        canvas {
+          display: block;
+          margin: auto;
+        }
+        .download{
+          text-align: center;
+        }
+        .imag{
+          display: block;
+  margin-left: auto;
+  margin-right: auto;
+        }
+        
+        
+        
+            </style>    
+  </head>
+  <body>
+    <img src="img2.png" class="imag" style="width:140px; height: 10px; padding-top: 5%; visibility: hidden;">
+    <p style="text-align: center; font-size: 13px; margin-bottom: 0px; font-family: 'Noto Sans Malayalam', sans-serif;"><b>ദാറുന്നജാത്ത് ഇസ്ലാമിക്ക് കോംപ്ലക്സ് വല്ലപ്പുഴ</b></p>
+    <img src="img.png" class="imag" style="width:260px; height: 120px;">
+    <form>
+      <h4>DNIC SAMMELANAM 2K23 - Profile Maker</h4>
+      <div class="file-picker" onclick="myFunction2()">
+        <label for="image"><i class="fa-light fa-file-arrow-up"></i> Choose Your image For your Profile</label>
+        <input type="file" id="image" accept="image/*">
+      </div>
+      
+      <button type="submit" id="submit" style="font-family: Poppins; opacity: 0;" onclick="myFunction()">Generate Your Image</button>
+    </form>
+    <div id="preview" style="visibility: hidden; height: 10px;"></div>
+    <div class="download">
+    <button type="button" id="download" style="margin-bottom: 5%; font-family: Poppins;">Your Profile Successfully Generated. Click Here to Download</button>
+    <p style="font-size: 13px;">Developed By <a href="https://naz-devs.github.io/" style="text-decoration: none; color: #4caf50;"><b>Naz-Devs</b></a></p>
+    </div>
+    <script>
+      function myFunction() {
+        document.getElementById("submit").style.opacity = "0";
+      }
+      function myFunction2() {
+        document.getElementById("submit").style.opacity = "1";
+      }
+      </script>
+    <script type="text/javascript">
+      const form = document.querySelector('form');
+      const submitButton = document.querySelector('#submit');
+      const preview = document.querySelector('#preview');
+      const downloadButton = document.querySelector('#download');
+      const frameImage = new Image();
+      frameImage.src = 'frame.png'; // replace with your custom frame image URL
+      const FRAME_WIDTH = 1000;
+      const FRAME_HEIGHT = 1000;
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const file = document.querySelector('#image').files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener('load', () => {
+          const image = new Image();
+          image.src = reader.result;
+          image.addEventListener('load', () => {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const ratio = Math.max(FRAME_WIDTH / image.width, FRAME_HEIGHT / image.height);
+            const imageWidth = image.width * ratio * 1; // reduce the uploaded image size by 20%
+            const imageHeight = image.height * ratio * 1;
+            const x = (FRAME_WIDTH - imageWidth) / 2;
+            const y = (FRAME_HEIGHT - imageHeight) / 2;
+            canvas.width = FRAME_WIDTH;
+            canvas.height = FRAME_HEIGHT;
+            context.drawImage(image, x, y, imageWidth, imageHeight); // draw the uploaded image centered and scaled to fit inside the frame
+            context.drawImage(frameImage, 0, 0, FRAME_WIDTH, FRAME_HEIGHT); // draw the frame image fixed in width and height, on top of the uploaded image
+            preview.innerHTML = '';
+            preview.appendChild(canvas);
+            downloadButton.disabled = false;
+            document.getElementById("download").style.visibility = "visible";
+            document.getElementById("submit").style.visibility = "visible";
+            downloadButton.addEventListener('click', () => {
+              downloadCanvasAsImage(canvas);
+            });
+          });
+        });
+
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      });
+
+      function downloadCanvasAsImage(canvas) {
+  const pixelRatio = window.devicePixelRatio || 1;
+  const newCanvas = document.createElement('canvas');
+  newCanvas.width = canvas.width * pixelRatio;
+  newCanvas.height = canvas.height * pixelRatio;
+  const context = newCanvas.getContext('2d');
+  context.scale(pixelRatio, pixelRatio);
+  context.drawImage(canvas, 0, 0);
+  
+  const link = document.createElement('a');
+  link.download = 'profile.jpg';
+  link.href = newCanvas.toDataURL('image/jpg');
+  link.click();
+  setTimeout(function(){ window. location. reload(); }, 1000);
+}
+    </script>
+  </body>
+</html>
